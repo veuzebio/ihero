@@ -55,3 +55,20 @@ App shell:
 - RxJS is available for async streams (HTTP, routing events); keep it at service boundaries.
 - File naming follows Angular CLI conventions: `feature-name.component.ts`, `feature-name.service.ts`, etc.
 - Generate new artifacts with `ng generate` to keep naming consistent.
+
+## Documentation
+
+**Always keep this file up to date.** After any structural change — new component, new convention, new command, new data file — update the relevant section in this CLAUDE.md before committing. This applies to every task, no exceptions.
+
+## App Structure
+
+This is a single-page portfolio/CV. All content data lives in [src/app/data/profile.ts](src/app/data/profile.ts) — edit that file to change personal info, skills, or links without touching components.
+
+Current sections (each is a standalone component under `src/app/`):
+
+| Component | Path | Description |
+|---|---|---|
+| `Hero` | [src/app/hero/](src/app/hero/) | Name, title, bio, contact links |
+| `Skills` | [src/app/skills/](src/app/skills/) | Skill cards with name and level |
+
+The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections directly via inline template — no routing needed for a single-page layout.
