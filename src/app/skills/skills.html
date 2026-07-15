@@ -1,0 +1,14 @@
+<section class="px-6 py-24 bg-[--color-neutral-100]">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="text-3xl font-bold text-[--color-neutral-900] mb-12">Habilidades</h2>
+
+    <ul class="flex flex-wrap gap-4" role="list">
+      @for (skill of skills; track skill.name) {
+        <li class="flex flex-col gap-1 px-6 py-4 rounded-2xl bg-white border border-[--color-neutral-200] min-w-36">
+          <span class="text-base font-semibold text-[--color-neutral-900]">{{ skill.name }}</span>
+          <span class="text-xs text-[--color-neutral-400] capitalize">{{ skill.level }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

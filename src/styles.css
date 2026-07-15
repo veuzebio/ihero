@@ -1,3 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-neutral-50: oklch(98% 0 0);
+  --color-neutral-100: oklch(95% 0 0);
+  --color-neutral-200: oklch(90% 0 0);
+  --color-neutral-400: oklch(70% 0 0);
+  --color-neutral-600: oklch(45% 0 0);
+  --color-neutral-800: oklch(25% 0 0);
+  --color-neutral-900: oklch(15% 0 0);
+
+  --color-accent: oklch(55% 0.18 260);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-800);
+  margin: 0;
+}
