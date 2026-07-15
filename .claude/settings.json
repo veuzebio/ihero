@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm start)",
+      "Bash(npm run build)",
+      "Bash(npm run watch)",
+      "Bash(npm test)",
+      "Bash(npx vitest run *)",
+      "Bash(npx tsc *)",
+      "Bash(npx prettier --write *)",
+      "Bash(ng generate *)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/tsc-check.js",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
