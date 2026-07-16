@@ -1,7 +1,7 @@
 export const profile = {
   name: 'Vitor Vieira Euzébio',
   title: 'Dev Frontend',
-  bio: 'Estou sempre em busca de entender melhor o mundo, costumo usar meu tempo livre para me atualizar daqueles filmes e séries que estão atrasados, jogar video-games e mais recentemente aprender a pescar.',
+  bio: 'Desenvolvedor Frontend com foco em TypeScript e Angular, apaixonado por criar interfaces acessíveis e bem estruturadas. Nas horas vagas, me atualizo em filmes e séries, jogo videogame e, mais recentemente, estou aprendendo a pescar.',
   links: [
     { label: 'GitHub', url: 'https://github.com/veuzebio', icon: 'github' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/veuzebio/', icon: 'linkedin' },
@@ -16,6 +16,14 @@ export const profile = {
       degree: 'Tecnólogo em Análise e Desenvolvimento de Sistemas',
       institution: 'UNIP — Universidade Paulista',
       year: 2014,
+    },
+  ],
+  experience: [
+    {
+      company: 'Empresa Exemplo',
+      role: 'Dev Frontend Sênior',
+      period: '2022 – presente',
+      description: 'Desenvolvimento de interfaces acessíveis com Angular e TypeScript.',
     },
   ],
 } as const;
