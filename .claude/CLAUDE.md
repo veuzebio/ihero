@@ -56,6 +56,7 @@ Current sections (each is a standalone component under `src/app/`):
 |---|---|---|
 | `Hero` | [src/app/hero/](src/app/hero/) | Name, title, bio, contact links |
 | `Skills` | [src/app/skills/](src/app/skills/) | Skill cards with name and level |
+| `Education` | [src/app/education/](src/app/education/) | Academic background with degree, institution, and year |
 
 The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections directly via inline template — no routing needed for a single-page layout.
 

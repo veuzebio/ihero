@@ -11,4 +11,11 @@ export const profile = {
     { name: 'TypeScript', level: 'avançado' },
     { name: 'Inteligência Artificial', level: 'explorando' },
   ],
+  education: [
+    {
+      degree: 'Tecnólogo em Análise e Desenvolvimento de Sistemas',
+      institution: 'UNIP — Universidade Paulista',
+      year: 2014,
+    },
+  ],
 } as const;
