@@ -57,10 +57,13 @@ Map passing tests to items with severity "info".`,
   () =>
     agent(
       `Review all Angular section components in src/app/ against ihero conventions.
-Components to check: src/app/hero/hero.ts, src/app/skills/skills.ts and their .html files.
-Also check src/app/app.ts for registration correctness.
 
-For each component verify:
+First, discover all components dynamically:
+- List all subdirectories of src/app/ (exclude app-level files and the data/ folder)
+- For each subdirectory, find the .ts and .html component files
+- Also read src/app/app.ts for registration correctness
+
+For each component found, verify:
 - No standalone: true in @Component decorator (default in Angular v22+)
 - No changeDetection set explicitly (OnPush is default in Angular v22+)
 - No *ngIf / *ngFor / *ngSwitch — must use @if / @for / @switch
@@ -68,8 +71,10 @@ For each component verify:
 - No ngClass / ngStyle — must use [class] / [style] bindings
 - <section> has aria-labelledby matching the <h2> id
 - Decorative SVGs have aria-hidden="true"
+- Component is registered in app.ts imports array and template
 
-Map each violation to an item with severity "error" or "warning".`,
+Map each violation to an item with severity "error" or "warning".
+Include the component name and file path in each item's location field.`,
       { label: 'conventions', phase: 'Check', schema: RESULT_SCHEMA },
     ),
 ]);

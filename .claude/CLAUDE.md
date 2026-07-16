@@ -53,12 +53,16 @@ This is a single-page portfolio/CV. All content data lives in [src/app/data/prof
 Current sections (each is a standalone component under `src/app/`):
 
 | Component | Path | Description |
-|---|---|---|
+| --- | --- | --- |
+| `NavMenu` | [src/app/nav-menu/](src/app/nav-menu/) | Sticky sidebar navigation with anchor links; hamburger on mobile; active state via IntersectionObserver |
 | `Hero` | [src/app/hero/](src/app/hero/) | Name, title, bio, contact links |
 | `Skills` | [src/app/skills/](src/app/skills/) | Skill cards with name and level |
 | `Education` | [src/app/education/](src/app/education/) | Academic background with degree, institution, and year |
+| `Experience` | [src/app/experience/](src/app/experience/) | Professional experience with company, role, period, and description |
 
 The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections directly via inline template — no routing needed for a single-page layout.
+
+**Adding a new section:** every new section **must** also be added to the `navItems` array in [src/app/nav-menu/nav-menu.ts](src/app/nav-menu/nav-menu.ts), in the same order it appears in `app.ts`. The `id` field must match the `id` attribute on the `<section>` element. The `/new-section` skill enforces this automatically.
 
 ## Key Conventions
 
@@ -77,7 +81,7 @@ The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections di
 All Claude Code project configuration lives under `.claude/` and is versioned:
 
 | File | Purpose |
-|---|---|
+| --- | --- |
 | `.claude/CLAUDE.md` | Instructions and conventions for the model (this file) |
 | `.claude/settings.json` | Permissions (auto-allowed commands) and hooks |
 | `.claude/hooks/tsc-check.js` | PostToolUse hook: runs `tsc --noEmit` after every Write/Edit on `.ts` or `.html` files |
@@ -92,7 +96,7 @@ All Claude Code project configuration lives under `.claude/` and is versioned:
 ## MCP Servers
 
 | Server | Config | Tools available |
-|---|---|---|
+| --- | --- | --- |
 | `angular-cli` | `~/.claude.json` (global) | `devserver_*`, `run_target`, `search_documentation`, `get_best_practices` |
 | `github` | `.claude/mcp.json` (project) | list/create issues, read PRs, query releases — requires `GITHUB_PERSONAL_ACCESS_TOKEN` in `settings.local.json` |
 
@@ -101,16 +105,18 @@ All Claude Code project configuration lives under `.claude/` and is versioned:
 Invoke workflows by asking Claude to run them by name, or they are triggered automatically by skills.
 
 | Workflow | Trigger | Description |
-|---|---|---|
+| --- | --- | --- |
 | `quality-check` | `use workflow quality-check` | Runs tsc, vitest, and convention review in parallel — reports consolidated results in pt-BR |
+| `refactor` | `use workflow refactor with args {"files":[...],"description":"..."}` | Quality gate after a refactoring: tsc + vitest + refactor-reviewer + a11y-check (HTML only) in parallel, report in pt-BR |
 
 ## Skills
 
 Invoke skills by typing the skill name prefixed with `/` in the chat.
 
 | Skill | Trigger | Description |
-|---|---|---|
+| --- | --- | --- |
 | New Section | `/new-section` | Scaffolds a new standalone Angular section component, registers it in `app.ts`, and updates `profile.ts` and this `CLAUDE.md` |
+| Refactor | `/refactor` | Guides a safe refactoring: captures baseline, applies changes, runs the `refactor` workflow as a quality gate, and suggests a Conventional Commits message |
 
 ## TypeScript Best Practices
 

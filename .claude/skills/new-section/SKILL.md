@@ -73,7 +73,17 @@ Open `src/app/app.ts` and:
 2. Add it to the `imports` array of `@Component`
 3. Add `<app-<name> />` to the template in the desired position
 
-### 5. Update CLAUDE.md
+### 5. Update the NavMenu
+
+Open `src/app/nav-menu/nav-menu.ts` and add an entry to the `navItems` array **in the same order the section appears in `app.ts`**:
+
+```typescript
+{ label: '<Portuguese label>', id: '<name>' },
+```
+
+The `id` must match the `id` attribute on the `<section>` element created in step 2. The NavMenu's IntersectionObserver auto-discovers `section[id]` elements, but the anchor link must be in `navItems` for keyboard and click navigation to work.
+
+### 6. Update CLAUDE.md
 
 Add the new section to the App Structure table in `.claude/CLAUDE.md`:
 
@@ -81,7 +91,7 @@ Add the new section to the App Structure table in `.claude/CLAUDE.md`:
 | `<ClassName>` | [src/app/<name>/](src/app/<name>/) | <description> |
 ```
 
-### 6. Verify
+### 7. Verify
 
 After creating all files:
 
@@ -94,10 +104,11 @@ After creating all files:
 - [ ] Component class name is PascalCase (e.g., `WorkExperience`)
 - [ ] Selector is `app-<kebab-case>`
 - [ ] Folder and file names are `<kebab-case>`
-- [ ] `<section>` has `aria-labelledby` matching the `<h2>` id
+- [ ] `<section>` has `id="<name>"` and `aria-labelledby` matching the `<h2>` id
 - [ ] `@for` uses `track`
 - [ ] No `standalone: true` in decorator
 - [ ] No `changeDetection` in decorator
 - [ ] `profile.ts` updated if new data was needed
 - [ ] `app.ts` updated with import + `imports` array + template tag
+- [ ] `nav-menu.ts` `navItems` updated with the new entry (same order as `app.ts`)
 - [ ] `.claude/CLAUDE.md` App Structure table updated
