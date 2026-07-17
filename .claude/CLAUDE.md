@@ -82,6 +82,7 @@ src/app/
   shared/                          ← cross-cutting concerns
     components/
       icon/                        ← Icon (name, size inputs); centralizes all SVGs
+      timeline/                    ← TimelineList + TimelineItem (content projection); used by education and experience
       index.ts
     services/
       theme/                       ← ThemeService
@@ -104,6 +105,8 @@ src/app/
 | `Education` | [src/app/features/education/](src/app/features/education/) | Academic background with degree, institution, and year |
 | `Experience` | [src/app/features/experience/](src/app/features/experience/) | Professional experience with company, role, period, and description |
 | `Icon` | [src/app/shared/components/icon/](src/app/shared/components/icon/) | SVG icon component; `name: IconName`, `size?: number` |
+| `TimelineList` | [src/app/shared/components/timeline/](src/app/shared/components/timeline/) | Timeline container with vertical line; wraps `TimelineItem` via `ng-content` |
+| `TimelineItem` | [src/app/shared/components/timeline/](src/app/shared/components/timeline/) | Single timeline entry with dot marker; projects content via `ng-content` |
 
 The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections directly via inline template — no routing needed for a single-page layout.
 

@@ -2,14 +2,14 @@
   <div class="max-w-2xl mx-auto">
     <h2 id="education-heading" class="text-3xl font-bold text-neutral-900 dark:text-dark-text mb-12">Formação</h2>
 
-    <ul class="flex flex-col divide-y divide-neutral-200 dark:divide-dark-border" role="list">
+    <app-timeline-list>
       @for (item of education; track item.institution + item.degree) {
-        <li class="flex flex-col gap-1 py-4">
+        <app-timeline-item>
           <span class="text-base font-semibold text-neutral-900 dark:text-dark-text">{{ item.degree }}</span>
           <span class="text-sm text-neutral-600 dark:text-dark-muted">{{ item.institution }}</span>
           <span class="text-xs text-neutral-400 dark:text-dark-muted">{{ item.year }}</span>
-        </li>
+        </app-timeline-item>
       }
-    </ul>
+    </app-timeline-list>
   </div>
 </section>
