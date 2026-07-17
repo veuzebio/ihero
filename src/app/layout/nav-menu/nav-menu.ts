@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, ViewChild, afterNextRender, inject, signal } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, ViewChild, afterNextRender, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ThemeService } from '../../shared/services';
 import { ThemeToggle } from './components';
@@ -19,6 +19,7 @@ interface NavItem {
 })
 export class NavMenu implements OnDestroy {
   private readonly document = inject(DOCUMENT);
+  private readonly zone = inject(NgZone);
   readonly themeService = inject(ThemeService);
   private observer: IntersectionObserver | null = null;
   private mediaQuery: MediaQueryList | null = null;
@@ -48,13 +49,12 @@ export class NavMenu implements OnDestroy {
     afterNextRender(() => {
       this.observer = new IntersectionObserver(
         (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              this.activeSection.set(entry.target.id);
-            }
-          }
+          const intersecting = entries.filter((e) => e.isIntersecting);
+          if (!intersecting.length) return;
+          const best = intersecting.reduce((a, b) => (b.intersectionRatio > a.intersectionRatio ? b : a));
+          this.zone.run(() => this.activeSection.set(best.target.id));
         },
-        { rootMargin: '-20% 0px -80% 0px' },
+        { threshold: [0, 0.1, 0.5, 1] },
       );
       const sections = this.document.querySelectorAll('section[id]');
       sections.forEach((section) => this.observer!.observe(section));
