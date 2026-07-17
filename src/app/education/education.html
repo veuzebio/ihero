@@ -1,13 +1,13 @@
 <section id="education" aria-labelledby="education-heading" class="px-6 py-24">
   <div class="max-w-2xl mx-auto">
-    <h2 id="education-heading" class="text-3xl font-bold text-neutral-900 mb-12">Formação</h2>
+    <h2 id="education-heading" class="text-3xl font-bold text-neutral-900 dark:text-dark-text mb-12">Formação</h2>
 
-    <ul class="flex flex-col divide-y divide-neutral-200" role="list">
+    <ul class="flex flex-col divide-y divide-neutral-200 dark:divide-dark-border" role="list">
       @for (item of education; track item.institution + item.degree) {
         <li class="flex flex-col gap-1 py-4">
-          <span class="text-base font-semibold text-neutral-900">{{ item.degree }}</span>
-          <span class="text-sm text-neutral-600">{{ item.institution }}</span>
-          <span class="text-xs text-neutral-400">{{ item.year }}</span>
+          <span class="text-base font-semibold text-neutral-900 dark:text-dark-text">{{ item.degree }}</span>
+          <span class="text-sm text-neutral-600 dark:text-dark-muted">{{ item.institution }}</span>
+          <span class="text-xs text-neutral-400 dark:text-dark-muted">{{ item.year }}</span>
         </li>
       }
     </ul>

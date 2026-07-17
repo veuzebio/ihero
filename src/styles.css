@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Class-based dark mode — applies when <html> has .dark class */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'Inter', system-ui, sans-serif;
 
@@ -12,6 +15,15 @@
   --color-neutral-900: oklch(18% 0 0);
 
   --color-accent: oklch(52% 0.14 260);
+
+  /* dark mode surfaces — slate-blue tones, not pure black */
+  --color-dark-bg: oklch(22% 0.012 255);
+  --color-dark-surface: oklch(27% 0.012 255);
+  --color-dark-surface-2: oklch(32% 0.012 255);
+  --color-dark-border: oklch(38% 0.012 255);
+  --color-dark-text: oklch(92% 0 0);
+  --color-dark-muted: oklch(68% 0 0);
+  --color-dark-accent: oklch(62% 0.14 260);
 }
 
 *,
@@ -29,4 +41,12 @@ body {
   background-color: var(--color-neutral-50);
   color: var(--color-neutral-800);
   margin: 0;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+html.dark body {
+  background-color: var(--color-dark-bg);
+  color: var(--color-dark-text);
 }

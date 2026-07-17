@@ -1,16 +1,16 @@
 <section id="experience" aria-labelledby="experience-heading" class="px-6 py-24">
   <div class="max-w-2xl mx-auto">
-    <h2 id="experience-heading" class="text-3xl font-bold text-neutral-900 mb-8">
+    <h2 id="experience-heading" class="text-3xl font-bold text-neutral-900 dark:text-dark-text mb-8">
       Experiência
     </h2>
 
     <ul class="flex flex-col gap-8" role="list">
       @for (item of items; track item.company + '-' + item.period) {
-        <li class="border-l border-neutral-200 pl-6">
-          <h3 class="text-xl font-semibold text-neutral-900">{{ item.role }}</h3>
-          <p class="text-sm text-neutral-600">{{ item.period }}</p>
-          <p class="text-neutral-800 font-medium">{{ item.company }}</p>
-          <p class="text-neutral-600 mt-2">{{ item.description }}</p>
+        <li class="border-l border-neutral-200 dark:border-dark-border pl-6">
+          <h3 class="text-xl font-semibold text-neutral-900 dark:text-dark-text">{{ item.role }}</h3>
+          <p class="text-sm text-neutral-600 dark:text-dark-muted">{{ item.period }}</p>
+          <p class="text-neutral-800 dark:text-dark-text font-medium">{{ item.company }}</p>
+          <p class="text-neutral-600 dark:text-dark-muted mt-2">{{ item.description }}</p>
         </li>
       }
     </ul>

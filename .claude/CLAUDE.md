@@ -40,7 +40,9 @@ App shell:
 - [src/app/app.config.ts](src/app/app.config.ts) — client `ApplicationConfig` (providers)
 - [src/app/app.config.server.ts](src/app/app.config.server.ts) — server-side providers merged on top of client config
 
-**Styling:** Tailwind CSS v4 via PostCSS (`@import 'tailwindcss'` in [src/styles.css](src/styles.css)). No `tailwind.config.js` — configuration is done in CSS using `@theme`.
+**Styling:** Tailwind CSS v4 via PostCSS (`@import 'tailwindcss'` in [src/styles.css](src/styles.css)). No `tailwind.config.js` — configuration is done in CSS using `@theme`. Dark mode uses `@variant dark (&:where(.dark, .dark *))` so the `dark:` Tailwind prefix activates when `<html>` has the `.dark` class.
+
+**Theme:** `ThemeService` ([src/app/theme/theme.service.ts](src/app/theme/theme.service.ts)) manages dark/light mode via a `isDark` signal, persists the choice to `localStorage`, and applies/removes the `.dark` class on `<html>`. The toggle button lives in `NavMenu` (sidebar bottom on desktop, top bar on mobile).
 
 **Prettier:** single quotes, print width 100, Angular HTML parser for `.html` files (see [.prettierrc](.prettierrc)).
 

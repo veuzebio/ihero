@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, ViewChild, afterNextRender, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from '../theme/theme.service';
 
 interface NavItem {
   label: string;
@@ -15,6 +16,7 @@ interface NavItem {
 })
 export class NavMenu implements OnDestroy {
   private readonly document = inject(DOCUMENT);
+  readonly themeService = inject(ThemeService);
   private observer: IntersectionObserver | null = null;
   private mediaQuery: MediaQueryList | null = null;
   private readonly onMediaChange = (e: MediaQueryListEvent) => this.isDesktop.set(e.matches);
@@ -24,6 +26,13 @@ export class NavMenu implements OnDestroy {
   readonly isOpen = signal(false);
   readonly isDesktop = signal(false);
   readonly activeSection = signal('hero');
+
+  navLinkClass(id: string): string {
+    const base = 'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ease-out ';
+    return this.activeSection() === id
+      ? base + 'bg-neutral-100 dark:bg-dark-surface-2 text-neutral-900 dark:text-dark-text'
+      : base + 'text-neutral-600 dark:text-dark-muted hover:text-neutral-900 dark:hover:text-dark-text hover:bg-neutral-200 dark:hover:bg-dark-surface-2';
+  }
 
   readonly navItems: NavItem[] = [
     { label: 'Início', id: 'hero' },
