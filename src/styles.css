@@ -3,15 +3,15 @@
 @theme {
   --font-sans: 'Inter', system-ui, sans-serif;
 
-  --color-neutral-50: oklch(98% 0 0);
-  --color-neutral-100: oklch(95% 0 0);
-  --color-neutral-200: oklch(90% 0 0);
-  --color-neutral-400: oklch(70% 0 0);
-  --color-neutral-600: oklch(45% 0 0);
-  --color-neutral-800: oklch(25% 0 0);
-  --color-neutral-900: oklch(15% 0 0);
+  --color-neutral-50: oklch(99% 0 0);
+  --color-neutral-100: oklch(97% 0 0);
+  --color-neutral-200: oklch(93% 0 0);
+  --color-neutral-400: oklch(72% 0 0);
+  --color-neutral-600: oklch(50% 0 0);
+  --color-neutral-800: oklch(28% 0 0);
+  --color-neutral-900: oklch(18% 0 0);
 
-  --color-accent: oklch(55% 0.18 260);
+  --color-accent: oklch(52% 0.14 260);
 }
 
 *,

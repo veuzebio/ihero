@@ -45,3 +45,6 @@ Thumbs.db
 
 # Claude Code — local overrides (tokens, personal paths)
 .claude/settings.local.json
+
+# Mcp local files
+.playwright-mcp

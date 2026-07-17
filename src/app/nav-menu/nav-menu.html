@@ -1,27 +1,29 @@
-<!-- Hamburguer button — mobile only -->
-<button
-  type="button"
-  class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white border border-[--color-neutral-200] text-[--color-neutral-800] hover:border-[--color-accent] hover:text-[--color-accent] transition-colors duration-200"
-  [attr.aria-expanded]="isOpen()"
-  aria-controls="nav-sidebar"
-  [attr.aria-label]="isOpen() ? 'Fechar menu de navegação' : 'Abrir menu de navegação'"
-  (click)="toggleMenu()"
->
-  @if (isOpen()) {
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  } @else {
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  }
-</button>
+<!-- Top bar — mobile only -->
+<div class="lg:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-white flex items-center px-4">
+  <button
+    type="button"
+    class="p-1.5 text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900"
+    [attr.aria-expanded]="isOpen()"
+    aria-controls="nav-sidebar"
+    [attr.aria-label]="isOpen() ? 'Fechar menu de navegação' : 'Abrir menu de navegação'"
+    (click)="toggleMenu()"
+  >
+    @if (isOpen()) {
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    } @else {
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    }
+  </button>
+</div>
 
 <!-- Backdrop — mobile only -->
 @if (isOpen()) {
   <div
-    class="lg:hidden fixed inset-0 z-30 bg-black/40"
+    class="lg:hidden fixed inset-0 z-30 bg-black/20"
     aria-hidden="true"
     (click)="closeMenu()"
   ></div>
@@ -32,7 +34,7 @@
   #navSidebar
   id="nav-sidebar"
   aria-label="Navegação da página"
-  class="fixed top-0 left-0 z-40 h-full w-52 bg-white border-r border-[--color-neutral-200] flex flex-col pt-16 pb-8 px-4 transition-transform duration-300
+  class="fixed top-0 left-0 z-40 h-full w-52 bg-white flex flex-col pt-16 pb-8 px-4 transition-transform duration-300
     -translate-x-full lg:translate-x-0"
   [class.-translate-x-full]="!isOpen()"
   [class.translate-x-0]="isOpen()"
@@ -44,12 +46,11 @@
       <li>
         <a
           [href]="'#' + item.id"
-          class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
-          [class.text-[--color-accent]]="activeSection() === item.id"
-          [class.bg-[--color-neutral-100]]="activeSection() === item.id"
-          [class.text-[--color-neutral-600]]="activeSection() !== item.id"
-          [class.hover:text-[--color-neutral-900]]="activeSection() !== item.id"
-          [class.hover:bg-[--color-neutral-50]]="activeSection() !== item.id"
+          class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ease-out"
+          [class.bg-neutral-100]="activeSection() === item.id"
+          [class.text-neutral-600]="activeSection() !== item.id"
+          [class.hover:text-neutral-900]="activeSection() !== item.id"
+          [class.hover:bg-neutral-200]="activeSection() !== item.id"
           [attr.aria-current]="activeSection() === item.id ? 'location' : null"
           (click)="closeMenu()"
         >

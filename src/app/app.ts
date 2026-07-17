@@ -10,7 +10,7 @@ import { NavMenu } from './nav-menu/nav-menu';
   imports: [Hero, Skills, Education, Experience, NavMenu],
   template: `
     <app-nav-menu />
-    <main class="lg:ml-52">
+    <main class="pt-12 lg:pt-0 lg:ml-52">
       <app-hero />
       <app-skills />
       <app-experience />
