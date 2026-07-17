@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { Hero } from './hero/hero';
-import { Skills } from './skills/skills';
-import { Education } from './education/education';
-import { Experience } from './experience/experience';
-import { NavMenu } from './nav-menu/nav-menu';
+import { NavMenu } from './layout/nav-menu';
+import { Hero, Skills, Education, Experience } from './features';
 
 @Component({
   selector: 'app-root',

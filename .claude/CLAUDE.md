@@ -42,7 +42,7 @@ App shell:
 
 **Styling:** Tailwind CSS v4 via PostCSS (`@import 'tailwindcss'` in [src/styles.css](src/styles.css)). No `tailwind.config.js` — configuration is done in CSS using `@theme`. Dark mode uses `@variant dark (&:where(.dark, .dark *))` so the `dark:` Tailwind prefix activates when `<html>` has the `.dark` class.
 
-**Theme:** `ThemeService` ([src/app/theme/theme.service.ts](src/app/theme/theme.service.ts)) manages dark/light mode via a `isDark` signal, persists the choice to `localStorage`, and applies/removes the `.dark` class on `<html>`. The toggle button lives in `NavMenu` (sidebar bottom on desktop, top bar on mobile).
+**Theme:** `ThemeService` ([src/app/shared/services/theme/theme.service.ts](src/app/shared/services/theme/theme.service.ts)) manages dark/light mode via a `isDark` signal, persists the choice to `localStorage`, and applies/removes the `.dark` class on `<html>`. The toggle button lives in `ThemeToggle` ([src/app/layout/nav-menu/components/theme-toggle/](src/app/layout/nav-menu/components/theme-toggle/)), rendered twice inside `NavMenu` — as an icon button on mobile and a switch on desktop.
 
 **Prettier:** single quotes, print width 100, Angular HTML parser for `.html` files (see [.prettierrc](.prettierrc)).
 
@@ -52,19 +52,76 @@ App shell:
 
 This is a single-page portfolio/CV. All content data lives in [src/app/data/profile.ts](src/app/data/profile.ts) — edit that file to change personal info, skills, or links without touching components.
 
-Current sections (each is a standalone component under `src/app/`):
+### Folder layout
+
+```
+src/app/
+  layout/                          ← shell structure (not content sections)
+    nav-menu/
+      components/
+        theme-toggle/              ← ThemeToggle (variant: 'icon' | 'switch')
+      nav-menu.ts / .html
+      index.ts
+    index.ts
+  features/                        ← content sections
+    hero/
+      components/
+        social-links/              ← SocialLinks (links input)
+      hero.ts / .html / .spec.ts
+      index.ts
+    skills/
+      skills.ts / .html
+      index.ts
+    experience/
+      experience.ts / .html
+      index.ts
+    education/
+      education.ts / .html
+      index.ts
+    index.ts                       ← re-exports all features
+  shared/                          ← cross-cutting concerns
+    components/
+      icon/                        ← Icon (name, size inputs); centralizes all SVGs
+      index.ts
+    services/
+      theme/                       ← ThemeService
+      index.ts
+    index.ts
+  data/
+    profile.ts                     ← all static content
+  app.ts / app.routes.ts / app.config.ts
+```
+
+### Components
 
 | Component | Path | Description |
 | --- | --- | --- |
-| `NavMenu` | [src/app/nav-menu/](src/app/nav-menu/) | Sticky sidebar navigation with anchor links; hamburger on mobile; active state via IntersectionObserver |
-| `Hero` | [src/app/hero/](src/app/hero/) | Name, title, bio, contact links |
-| `Skills` | [src/app/skills/](src/app/skills/) | Skill cards with name and level |
-| `Education` | [src/app/education/](src/app/education/) | Academic background with degree, institution, and year |
-| `Experience` | [src/app/experience/](src/app/experience/) | Professional experience with company, role, period, and description |
+| `NavMenu` | [src/app/layout/nav-menu/](src/app/layout/nav-menu/) | Sticky sidebar navigation with anchor links; hamburger on mobile; active state via IntersectionObserver |
+| `ThemeToggle` | [src/app/layout/nav-menu/components/theme-toggle/](src/app/layout/nav-menu/components/theme-toggle/) | Theme toggle button; `variant="icon"` (mobile) or `variant="switch"` (desktop) |
+| `Hero` | [src/app/features/hero/](src/app/features/hero/) | Name, title, bio, contact links |
+| `SocialLinks` | [src/app/features/hero/components/social-links/](src/app/features/hero/components/social-links/) | Social link buttons with icons; `links` input |
+| `Skills` | [src/app/features/skills/](src/app/features/skills/) | Skill cards with name and level |
+| `Education` | [src/app/features/education/](src/app/features/education/) | Academic background with degree, institution, and year |
+| `Experience` | [src/app/features/experience/](src/app/features/experience/) | Professional experience with company, role, period, and description |
+| `Icon` | [src/app/shared/components/icon/](src/app/shared/components/icon/) | SVG icon component; `name: IconName`, `size?: number` |
 
 The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections directly via inline template — no routing needed for a single-page layout.
 
-**Adding a new section:** every new section **must** also be added to the `navItems` array in [src/app/nav-menu/nav-menu.ts](src/app/nav-menu/nav-menu.ts), in the same order it appears in `app.ts`. The `id` field must match the `id` attribute on the `<section>` element. The `/new-section` skill enforces this automatically.
+**Adding a new section:** every new section **must** also be added to the `navItems` array in [src/app/layout/nav-menu/nav-menu.ts](src/app/layout/nav-menu/nav-menu.ts), in the same order it appears in `app.ts`. The `id` field must match the `id` attribute on the `<section>` element. The `/new-section` skill enforces this automatically.
+
+### Barrel files (index.ts convention)
+
+Every folder that is imported from another location exposes a public API via `index.ts`. Import from the folder, not the file:
+
+```typescript
+// correct
+import { NavMenu } from './layout/nav-menu';
+import { Hero, Skills } from './features';
+import { Icon, ThemeService } from './shared';
+
+// avoid
+import { NavMenu } from './layout/nav-menu/nav-menu';
+```
 
 ## Key Conventions
 
@@ -87,6 +144,7 @@ All Claude Code project configuration lives under `.claude/` and is versioned:
 | `.claude/CLAUDE.md` | Instructions and conventions for the model (this file) |
 | `.claude/settings.json` | Permissions (auto-allowed commands) and hooks |
 | `.claude/hooks/tsc-check.js` | PostToolUse hook: runs `tsc --noEmit` after every Write/Edit on `.ts` or `.html` files |
+| `.claude/hooks/build-check.js` | PostToolUse hook: runs `tsc --noEmit` after Bash commands containing `rm` on `.ts`/`.html` files — catches broken imports from barrel or file deletions |
 | `.claude/skills/new-section/` | Skill `/new-section`: scaffolds a new portfolio section component |
 | `.claude/agents/a11y-check.md` | Agent: audits WCAG AA accessibility on a component |
 | `.claude/agents/section-reviewer.md` | Agent: reviews a component against ihero conventions |

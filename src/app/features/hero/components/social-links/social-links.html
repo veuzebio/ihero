@@ -1,0 +1,13 @@
+<div class="flex gap-4 flex-wrap">
+  @for (link of links(); track link.label) {
+    <a
+      [href]="link.url"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center rounded-lg gap-2 px-5 py-2.5 text-neutral-800 dark:text-dark-text text-sm font-medium hover:bg-neutral-200 dark:hover:bg-dark-surface-2 transition-colors duration-200"
+    >
+      <app-icon [name]="asIconName(link.icon)" [size]="16" />
+      {{ link.label }}
+    </a>
+  }
+</div>

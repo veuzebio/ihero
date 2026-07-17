@@ -1,0 +1,22 @@
+<section id="hero" class="min-h-screen flex items-center justify-center px-6 py-24" aria-labelledby="hero-heading">
+  <div class="max-w-2xl w-full">
+    <h1 id="hero-heading" class="flex flex-col text-neutral-900 dark:text-dark-text">
+      <span class="text-2xl font-light text-neutral-600 dark:text-dark-muted">
+        Oi, sou o
+      </span>
+      <span class="text-5xl font-bold text-neutral-900 dark:text-dark-text">
+        {{ profile.name }}
+      </span>
+    </h1>
+
+    <h2 id="hero-title" class="text-2xl font-light text-neutral-600 dark:text-dark-muted my-10">
+      - {{ profile.title }}
+    </h2>
+
+    <p class="text-lg text-neutral-600 dark:text-dark-muted leading-relaxed mb-10 max-w-xl">
+      {{ profile.bio }}
+    </p>
+
+    <app-social-links [links]="profile.links" />
+  </div>
+</section>

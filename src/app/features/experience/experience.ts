@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { profile } from '../data/profile';
+import { profile } from '../../data/profile';
 
 @Component({
   selector: 'app-experience',

@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnDestroy, ViewChild, afterNextRender, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ThemeService } from '../theme/theme.service';
+import { ThemeService } from '../../shared/services';
+import { ThemeToggle } from './components';
+import { Icon } from '../../shared/components';
 
 interface NavItem {
   label: string;
@@ -9,6 +11,7 @@ interface NavItem {
 
 @Component({
   selector: 'app-nav-menu',
+  imports: [ThemeToggle, Icon],
   templateUrl: './nav-menu.html',
   host: {
     '(document:keydown.escape)': 'closeMenu()',

@@ -18,12 +18,12 @@ Ask the user for:
 
 ### 2. Generate the component
 
-Create two files following the existing pattern (see `src/app/skills/` as reference):
+New sections live under `src/app/features/<name>/`. See `src/app/features/skills/` as reference.
 
-**`src/app/<name>/<name>.ts`**
+**`src/app/features/<name>/<name>.ts`**
 ```typescript
 import { Component } from '@angular/core';
-import { profile } from '../data/profile';
+import { profile } from '../../data/profile';
 
 @Component({
   selector: 'app-<name>',
@@ -35,15 +35,21 @@ export class <ClassName> {
 }
 ```
 
+**`src/app/features/<name>/index.ts`**
+```typescript
+export { <ClassName> } from './<name>';
+```
+
 Rules:
 - Do NOT set `standalone: true` (default in Angular v22+)
 - Do NOT set `changeDetection` (OnPush is default in Angular v22+)
 - Use `templateUrl` pointing to the sibling `.html` file
 - Expose data via `readonly` properties bound to `profile`
+- Always create an `index.ts` barrel in the feature folder
 
-**`src/app/<name>/<name>.html`**
+**`src/app/features/<name>/<name>.html`**
 ```html
-<section aria-labelledby="<name>-heading" class="px-6 py-24">
+<section id="<name>" aria-labelledby="<name>-heading" class="px-6 py-24">
   <div class="max-w-2xl mx-auto">
     <h2 id="<name>-heading" class="text-3xl font-bold text-[--color-neutral-900] mb-8">
       <!-- section title -->
@@ -66,16 +72,24 @@ If the section needs new data, add the field to `src/app/data/profile.ts` as `co
 
 Use `as const` on the whole object to preserve literal types.
 
-### 4. Register in app.ts
+### 4. Update features/index.ts
+
+Open `src/app/features/index.ts` and add the export:
+
+```typescript
+export { <ClassName> } from './<name>';
+```
+
+### 5. Register in app.ts
 
 Open `src/app/app.ts` and:
-1. Add the import for the new component class
+1. Add the class to the destructured import from `'./features'`
 2. Add it to the `imports` array of `@Component`
 3. Add `<app-<name> />` to the template in the desired position
 
-### 5. Update the NavMenu
+### 6. Update the NavMenu
 
-Open `src/app/nav-menu/nav-menu.ts` and add an entry to the `navItems` array **in the same order the section appears in `app.ts`**:
+Open `src/app/layout/nav-menu/nav-menu.ts` and add an entry to the `navItems` array **in the same order the section appears in `app.ts`**:
 
 ```typescript
 { label: '<Portuguese label>', id: '<name>' },
@@ -83,12 +97,12 @@ Open `src/app/nav-menu/nav-menu.ts` and add an entry to the `navItems` array **i
 
 The `id` must match the `id` attribute on the `<section>` element created in step 2. The NavMenu's IntersectionObserver auto-discovers `section[id]` elements, but the anchor link must be in `navItems` for keyboard and click navigation to work.
 
-### 6. Update CLAUDE.md
+### 7. Update CLAUDE.md
 
-Add the new section to the App Structure table in `.claude/CLAUDE.md`:
+Add the new section to the Components table in `.claude/CLAUDE.md`:
 
 ```markdown
-| `<ClassName>` | [src/app/<name>/](src/app/<name>/) | <description> |
+| `<ClassName>` | [src/app/features/<name>/](src/app/features/<name>/) | <description> |
 ```
 
 ### 7. Verify
@@ -103,12 +117,14 @@ After creating all files:
 
 - [ ] Component class name is PascalCase (e.g., `WorkExperience`)
 - [ ] Selector is `app-<kebab-case>`
-- [ ] Folder and file names are `<kebab-case>`
+- [ ] Folder and file names are `<kebab-case>` under `src/app/features/<name>/`
 - [ ] `<section>` has `id="<name>"` and `aria-labelledby` matching the `<h2>` id
 - [ ] `@for` uses `track`
 - [ ] No `standalone: true` in decorator
 - [ ] No `changeDetection` in decorator
+- [ ] `index.ts` barrel created in the feature folder
+- [ ] `features/index.ts` updated with the new export
 - [ ] `profile.ts` updated if new data was needed
 - [ ] `app.ts` updated with import + `imports` array + template tag
-- [ ] `nav-menu.ts` `navItems` updated with the new entry (same order as `app.ts`)
-- [ ] `.claude/CLAUDE.md` App Structure table updated
+- [ ] `layout/nav-menu/nav-menu.ts` `navItems` updated with the new entry (same order as `app.ts`)
+- [ ] `.claude/CLAUDE.md` Components table updated

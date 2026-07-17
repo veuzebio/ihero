@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Hero } from './hero';
-import { profile } from '../data/profile';
+import { profile } from '../../data/profile';
 
 describe('Hero', () => {
   beforeEach(async () => {
