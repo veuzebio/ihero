@@ -25,6 +25,12 @@ Format code:
 npx prettier --write "src/**/*.{ts,html,css}"
 ```
 
+## Process Hygiene
+
+**Always stop background processes before ending a task.** If a dev server (`ng serve`), SSR server, or any background process was started during the task, stop it before reporting the task as complete — use `devserver_stop` (MCP) or kill the process by port if started via Bash.
+
+Do not leave processes running between tasks unless the user explicitly asks to keep them alive.
+
 ## Architecture
 
 **Angular 22 + SSR** — standalone components, no NgModules. The app runs both in the browser and server-side via `@angular/ssr` + Express.
@@ -133,6 +139,13 @@ import { NavMenu } from './layout/nav-menu/nav-menu';
 - RxJS is available for async streams (HTTP, routing events); keep it at service boundaries.
 - File naming follows Angular CLI conventions: `feature-name.component.ts`, `feature-name.service.ts`, etc.
 - Generate new artifacts with `ng generate` to keep naming consistent.
+
+### Scroll & layout
+
+- **`scroll-snap-type` must be set on `<main>`, never on `html` or `body`.** Setting it on `html` makes the browser treat CSS `transform` transitions (e.g. sidebar slide-in) as scroll-position changes and snaps them instantly, breaking animations. The `<main>` element is the scroll container (`overflow-y: auto; height: 100svh`); sections use `snap-start`.
+- The `IntersectionObserver` in `NavMenu` uses `main` as its `root`. When changing the scroll container, update the `root` option accordingly.
+- `scroll-behavior: smooth` belongs on the scroll container (`main`), not just on `html`.
+- **Tailwind v4 uses the native CSS `translate` property** (not `transform`) for `translate-x-*` / `translate-y-*` utilities. Always use `transition-[translate,...]` — not `transition-[transform,...]` — when animating these utilities. Using `transform` in the transition list has no effect and the element will jump instantaneously.
 
 ## Documentation
 

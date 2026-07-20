@@ -47,14 +47,16 @@ export class NavMenu implements OnDestroy {
 
   constructor() {
     afterNextRender(() => {
+      const scrollRoot = this.document.querySelector('main') as HTMLElement;
       this.observer = new IntersectionObserver(
         (entries) => {
-          const intersecting = entries.filter((e) => e.isIntersecting);
-          if (!intersecting.length) return;
-          const best = intersecting.reduce((a, b) => (b.intersectionRatio > a.intersectionRatio ? b : a));
-          this.zone.run(() => this.activeSection.set(best.target.id));
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              this.zone.run(() => this.activeSection.set(entry.target.id));
+            }
+          }
         },
-        { threshold: [0, 0.1, 0.5, 1] },
+        { root: scrollRoot, rootMargin: '-45% 0px -45% 0px', threshold: 0 },
       );
       const sections = this.document.querySelectorAll('section[id]');
       sections.forEach((section) => this.observer!.observe(section));

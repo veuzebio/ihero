@@ -35,7 +35,7 @@
   class="fixed top-0 left-0 z-40 h-full w-52 flex flex-col pt-16 pb-8 px-4
     bg-white dark:bg-dark-surface
     -translate-x-full lg:translate-x-0
-    transition-[transform,background-color,color] duration-300"
+    transition-[translate,background-color,color] duration-300"
   [class.-translate-x-full]="!isOpen()"
   [class.translate-x-0]="isOpen()"
   [attr.inert]="(!isOpen() && !isDesktop()) ? '' : null"

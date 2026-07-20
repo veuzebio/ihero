@@ -34,12 +34,18 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+main {
   scroll-snap-type: y mandatory;
-  scroll-padding-top: 3rem; /* mobile fixed nav height (h-12 = 48px = 3rem) */
+  scroll-padding-top: 3rem;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  height: 100svh;
 }
 
 @media (min-width: 1024px) {
-  html {
+  main {
     scroll-padding-top: 0;
   }
 }
