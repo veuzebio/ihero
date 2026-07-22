@@ -1,0 +1,83 @@
+:host {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  display: none;
+  width: 88px;
+  height: 112px;
+  cursor: pointer;
+  z-index: 50;
+  user-select: none;
+
+  @media (min-width: 1024px) {
+    display: block;
+  }
+}
+
+.mascot-sprite {
+  width: 88px;
+  height: 112px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background-repeat: no-repeat;
+  background-size: auto 256px;
+  will-change: background-position;
+}
+
+.mascot-sprite.facing-left {
+  transform: scaleX(-1);
+}
+
+@keyframes anim-idle {
+  from { background-position: -76px -54px; }
+  to { background-position: -2636px -54px; }
+}
+.anim-idle {
+  background-image: url('/assets/hero/male_hero-idle.png');
+  animation: anim-idle 1s steps(10) infinite;
+}
+
+@keyframes anim-walk {
+  from { background-position: -76px -54px; }
+  to { background-position: -2636px -54px; }
+}
+.anim-walk {
+  background-image: url('/assets/hero/male_hero-walk.png');
+  animation: anim-walk 0.8s steps(10) infinite;
+}
+
+@keyframes anim-run {
+  from { background-position: -76px -54px; }
+  to { background-position: -2636px -54px; }
+}
+.anim-run {
+  background-image: url('/assets/hero/male_hero-run.png');
+  animation: anim-run 0.5s steps(10) infinite;
+}
+
+@keyframes anim-jump {
+  from { background-position: -76px -54px; }
+  to { background-position: -1612px -54px; }
+}
+.anim-jump {
+  background-image: url('/assets/hero/male_hero-jump.png');
+  animation: anim-jump 0.6s steps(6) forwards;
+}
+
+@keyframes anim-fall {
+  from { background-position: -76px -54px; }
+  to { background-position: -1100px -54px; }
+}
+.anim-fall {
+  background-image: url('/assets/hero/male_hero-fall.png');
+  animation: anim-fall 0.4s steps(4) forwards;
+}
+
+@keyframes anim-fall-loop {
+  from { background-position: -76px -54px; }
+  to { background-position: -844px -54px; }
+}
+.anim-fall_loop {
+  background-image: url('/assets/hero/male_hero-fall_loop.png');
+  animation: anim-fall-loop 0.4s steps(3) infinite;
+}

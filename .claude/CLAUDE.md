@@ -89,6 +89,12 @@ src/app/
     components/
       icon/                        ← Icon (name, size inputs); centralizes all SVGs
       timeline/                    ← TimelineList + TimelineItem (content projection); used by education and experience
+      mascot/                      ← Mascot component + MascotService; pixel art mascot with drag & animations
+        mascot.types.ts            ← AnimationName, AnimationConfig, MascotPosition
+        mascot.service.ts          ← MascotService (@Service); controls animation state and position
+        mascot.ts                  ← Mascot component; position:fixed, drag & drop, animationend chain
+        mascot.html / mascot.css
+        index.ts
       index.ts
     services/
       theme/                       ← ThemeService
@@ -113,6 +119,8 @@ src/app/
 | `Icon` | [src/app/shared/components/icon/](src/app/shared/components/icon/) | SVG icon component; `name: IconName`, `size?: number` |
 | `TimelineList` | [src/app/shared/components/timeline/](src/app/shared/components/timeline/) | Timeline container with vertical line; wraps `TimelineItem` via `ng-content` |
 | `TimelineItem` | [src/app/shared/components/timeline/](src/app/shared/components/timeline/) | Single timeline entry with dot marker; projects content via `ng-content` |
+| `Mascot` | [src/app/shared/components/mascot/](src/app/shared/components/mascot/) | Pixel art mascot; `position:fixed`, drag & drop (mouse + touch); reacts to section changes via `MascotService` |
+| `MascotService` | [src/app/shared/components/mascot/mascot.service.ts](src/app/shared/components/mascot/mascot.service.ts) | Singleton (`@Service`); holds `animation`, `position`, `facingLeft` signals; `play(anim)` chains one-shot animations; injected in `NavMenu` to trigger `jump` on section change |
 
 The root `App` component ([src/app/app.ts](src/app/app.ts)) composes sections directly via inline template — no routing needed for a single-page layout.
 
