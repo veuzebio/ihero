@@ -3,7 +3,6 @@ import { DOCUMENT } from '@angular/common';
 import { ThemeService } from '../../shared/services';
 import { ThemeToggle } from './components';
 import { Icon } from '../../shared/components';
-import { MascotService } from '../../shared';
 
 interface NavItem {
   label: string;
@@ -22,7 +21,6 @@ export class NavMenu implements OnDestroy {
   private readonly document = inject(DOCUMENT);
   private readonly zone = inject(NgZone);
   readonly themeService = inject(ThemeService);
-  private readonly mascotService = inject(MascotService);
   private observer: IntersectionObserver | null = null;
   private mediaQuery: MediaQueryList | null = null;
   private readonly onMediaChange = (e: MediaQueryListEvent) => this.isDesktop.set(e.matches);
@@ -57,10 +55,6 @@ export class NavMenu implements OnDestroy {
             if (entry.isIntersecting) {
               this.zone.run(() => {
                 const newSection = entry.target.id;
-                if (newSection !== this.previousSection) {
-                  this.previousSection = newSection;
-                  this.mascotService.jump();
-                }
                 this.activeSection.set(newSection);
               });
             }
