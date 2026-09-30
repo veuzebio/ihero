@@ -50,13 +50,15 @@ App shell:
 
 **Theme:** `ThemeService` ([src/app/shared/services/theme/theme.service.ts](src/app/shared/services/theme/theme.service.ts)) manages dark/light mode via a `isDark` signal, persists the choice to `localStorage`, and applies/removes the `.dark` class on `<html>`. The toggle button lives in `ThemeToggle` ([src/app/layout/nav-menu/components/theme-toggle/](src/app/layout/nav-menu/components/theme-toggle/)), rendered twice inside `NavMenu` — as an icon button on mobile and a switch on desktop.
 
+**Language (i18n):** `LanguageService` ([src/app/shared/services/language/language.service.ts](src/app/shared/services/language/language.service.ts)) manages `pt-BR`/`en-US` via a `language` signal, exposes translated UI strings through a `t` computed signal (typed against `Translations`, backed by JSON dictionaries under `src/app/i18n/translations/`) and the active language's profile data through a `profile` computed signal (backed by `src/app/i18n/profile.pt-BR.ts` / `profile.en-US.ts`). Persists the choice to `localStorage` and syncs `<html lang>`. Defaults to `pt-BR` when nothing is stored (no `navigator.language` detection). Components read strings via a single `languageService.t()` call per template and property access (e.g. `t().nav.home`) — no per-string translation logic in components. The selector lives in `LanguageSelector` ([src/app/layout/nav-menu/components/language-selector/](src/app/layout/nav-menu/components/language-selector/)), rendered twice inside `NavMenu` as an ARIA radiogroup (`role="radiogroup"`/`role="radio"`, roving tabindex, arrow-key navigation) — flags only on mobile, flag + label on desktop.
+
 **Prettier:** single quotes, print width 100, Angular HTML parser for `.html` files (see [.prettierrc](.prettierrc)).
 
-**TypeScript:** strict mode flags enabled (`noImplicitReturns`, `noFallthroughCasesInSwitch`, `noPropertyAccessFromIndexSignature`). Target ES2022, `module: preserve`.
+**TypeScript:** strict mode flags enabled (`noImplicitReturns`, `noFallthroughCasesInSwitch`, `noPropertyAccessFromIndexSignature`). Target ES2022, `module: preserve`. `resolveJsonModule: true` is enabled to typecheck the i18n translation JSON imports against the `Translations` interface.
 
 ## App Structure
 
-This is a single-page portfolio/CV. All content data lives in [src/app/data/profile.ts](src/app/data/profile.ts) — edit that file to change personal info, skills, or links without touching components.
+This is a single-page portfolio/CV. All content data lives in [src/app/i18n/profile.pt-BR.ts](src/app/i18n/profile.pt-BR.ts) and [src/app/i18n/profile.en-US.ts](src/app/i18n/profile.en-US.ts) — edit both files (same shape) to change personal info, skills, or links without touching components. UI strings (menu labels, section headings, aria-labels) live in [src/app/i18n/translations/pt-BR.json](src/app/i18n/translations/pt-BR.json) and [en-US.json](src/app/i18n/translations/en-US.json), typed against `Translations` ([src/app/i18n/translation.types.ts](src/app/i18n/translation.types.ts)).
 
 ### Folder layout
 
@@ -66,6 +68,7 @@ src/app/
     nav-menu/
       components/
         theme-toggle/              ← ThemeToggle (variant: 'icon' | 'switch')
+        language-selector/         ← LanguageSelector (variant: 'icon' | 'switch')
       nav-menu.ts / .html
       index.ts
     index.ts
@@ -98,10 +101,16 @@ src/app/
       index.ts
     services/
       theme/                       ← ThemeService
+      language/                    ← LanguageService
       index.ts
     index.ts
-  data/
-    profile.ts                     ← all static content
+  i18n/                            ← translation dictionaries and per-language profile data
+    translation.types.ts           ← Translations interface, Language type
+    translations/
+      pt-BR.json / en-US.json
+    profile.types.ts                ← Profile interface, SkillLevel type
+    profile.pt-BR.ts / profile.en-US.ts
+    index.ts
   app.ts / app.routes.ts / app.config.ts
 ```
 
@@ -111,6 +120,7 @@ src/app/
 | --- | --- | --- |
 | `NavMenu` | [src/app/layout/nav-menu/](src/app/layout/nav-menu/) | Sticky sidebar navigation with anchor links; hamburger on mobile; active state via IntersectionObserver |
 | `ThemeToggle` | [src/app/layout/nav-menu/components/theme-toggle/](src/app/layout/nav-menu/components/theme-toggle/) | Theme toggle button; `variant="icon"` (mobile) or `variant="switch"` (desktop) |
+| `LanguageSelector` | [src/app/layout/nav-menu/components/language-selector/](src/app/layout/nav-menu/components/language-selector/) | Language radiogroup (pt-BR/en-US); `variant="icon"` (mobile, flags only) or `variant="switch"` (desktop, flag + label) |
 | `Hero` | [src/app/features/hero/](src/app/features/hero/) | Name, title, bio, contact links |
 | `SocialLinks` | [src/app/features/hero/components/social-links/](src/app/features/hero/components/social-links/) | Social link buttons with icons; `links` input |
 | `Skills` | [src/app/features/skills/](src/app/features/skills/) | Skill cards with name and level |

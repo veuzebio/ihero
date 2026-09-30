@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Icon } from '../../shared';
-import { profile } from '../../data/profile';
+import { LanguageService } from '../../shared/services';
 
 @Component({
   selector: 'app-skills',
@@ -8,5 +8,8 @@ import { profile } from '../../data/profile';
   templateUrl: './skills.html',
 })
 export class Skills {
-  readonly skills = profile.skills;
+  private readonly languageService = inject(LanguageService);
+
+  readonly skills = computed(() => this.languageService.profile().skills);
+  readonly t = computed(() => this.languageService.t());
 }

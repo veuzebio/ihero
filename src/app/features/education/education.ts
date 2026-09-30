@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { profile } from '../../data/profile';
+import { Component, computed, inject } from '@angular/core';
+import { LanguageService } from '../../shared/services';
 import { TimelineList, TimelineItem } from '../../shared/components';
 
 @Component({
@@ -8,5 +8,8 @@ import { TimelineList, TimelineItem } from '../../shared/components';
   templateUrl: './education.html',
 })
 export class Education {
-  readonly education = profile.education;
+  private readonly languageService = inject(LanguageService);
+
+  readonly education = computed(() => this.languageService.profile().education);
+  readonly t = computed(() => this.languageService.t());
 }

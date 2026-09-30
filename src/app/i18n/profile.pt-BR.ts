@@ -1,27 +1,29 @@
-export const profile = {
+import type { Profile } from './profile.types';
+
+export const profilePtBr: Profile = {
   name: 'Vitor Euzébio',
   title: 'Dev Frontend',
   bio: `Sou engenheiro de soluções com o foco em frontend. Tenho perfil técnico como ponto forte: me identifico com arquitetura de novos projetos, desenvolvimento de funcionalidades e melhoria de processos.
 
   Já passei pelos setores financeiro, logístico e de varejo. Com isso procuro trazer minha experiência para contribuir com o crescimento de quem está ao redor.
-  
+
   Ultimamente estou explorando o uso de IA com agentes e workflows, porque acredito que isso tem mudado a forma como desenvolvemos software.`,
   links: [
     { label: 'GitHub', url: 'https://github.com/veuzebio', icon: 'github' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/veuzebio/', icon: 'linkedin' },
   ],
   skills: [
-    { name: 'TypeScript', level: 'avançado' },
-    { name: 'JavaScript', level: 'avançado' },
-    { name: 'Angular', level: 'avançado' },
-    { name: 'RxJS', level: 'avançado' },
-    { name: 'HTML & CSS', level: 'avançado' },
-    { name: 'Scrum & Kanban', level: 'avançado' },
-    { name: 'React.js', level: 'intermediário' },
-    { name: 'IA Generativa', level: 'explorando' },
-    { name: 'C#', level: 'intermediário' },
-    { name: 'Docker', level: 'intermediário' },
-    { name: 'SQL', level: 'intermediário' },
+    { name: 'TypeScript', level: 'advanced' },
+    { name: 'JavaScript', level: 'advanced' },
+    { name: 'Angular', level: 'advanced' },
+    { name: 'RxJS', level: 'advanced' },
+    { name: 'HTML & CSS', level: 'advanced' },
+    { name: 'Scrum & Kanban', level: 'advanced' },
+    { name: 'React.js', level: 'intermediate' },
+    { name: 'IA Generativa', level: 'exploring' },
+    { name: 'C#', level: 'intermediate' },
+    { name: 'Docker', level: 'intermediate' },
+    { name: 'SQL', level: 'intermediate' },
   ],
   education: [
     {
@@ -84,4 +86,4 @@ export const profile = {
         'Desenvolvimento de aplicações web responsivas com HTML, CSS e JavaScript para diversos setores do mercado, incluindo implementação de e-commerce com a plataforma VTEX.',
     },
   ],
-} as const;
+};

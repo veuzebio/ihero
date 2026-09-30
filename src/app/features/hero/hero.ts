@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { profile } from '../../data/profile';
+import { Component, computed, inject } from '@angular/core';
+import { LanguageService } from '../../shared/services';
 import { SocialLinks } from './components';
 
 @Component({
@@ -8,5 +8,8 @@ import { SocialLinks } from './components';
   templateUrl: './hero.html',
 })
 export class Hero {
-  readonly profile = profile;
+  private readonly languageService = inject(LanguageService);
+
+  readonly profile = computed(() => this.languageService.profile());
+  readonly t = computed(() => this.languageService.t());
 }

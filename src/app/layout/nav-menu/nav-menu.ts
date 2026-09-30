@@ -1,7 +1,17 @@
-import { Component, ElementRef, NgZone, OnDestroy, ViewChild, afterNextRender, inject, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  ViewChild,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { ThemeService } from '../../shared/services';
-import { ThemeToggle } from './components';
+import { ThemeService, LanguageService } from '../../shared/services';
+import { ThemeToggle, LanguageSelector } from './components';
 import { Icon } from '../../shared/components';
 
 interface NavItem {
@@ -11,7 +21,7 @@ interface NavItem {
 
 @Component({
   selector: 'app-nav-menu',
-  imports: [ThemeToggle, Icon],
+  imports: [ThemeToggle, LanguageSelector, Icon],
   templateUrl: './nav-menu.html',
   host: {
     '(document:keydown.escape)': 'closeMenu()',
@@ -21,6 +31,7 @@ export class NavMenu implements OnDestroy {
   private readonly document = inject(DOCUMENT);
   private readonly zone = inject(NgZone);
   readonly themeService = inject(ThemeService);
+  readonly languageService = inject(LanguageService);
   private observer: IntersectionObserver | null = null;
   private mediaQuery: MediaQueryList | null = null;
   private readonly onMediaChange = (e: MediaQueryListEvent) => this.isDesktop.set(e.matches);
@@ -39,12 +50,15 @@ export class NavMenu implements OnDestroy {
       : base + 'text-neutral-600 dark:text-dark-muted hover:text-neutral-900 dark:hover:text-dark-text hover:bg-neutral-200 dark:hover:bg-dark-surface-2';
   }
 
-  readonly navItems: NavItem[] = [
-    { label: 'Início', id: 'hero' },
-    { label: 'Habilidades', id: 'skills' },
-    { label: 'Experiência', id: 'experience' },
-    { label: 'Formação', id: 'education' },
-  ];
+  readonly navItems = computed<NavItem[]>(() => {
+    const t = this.languageService.t();
+    return [
+      { label: t.nav.home, id: 'hero' },
+      { label: t.nav.skills, id: 'skills' },
+      { label: t.nav.experience, id: 'experience' },
+      { label: t.nav.education, id: 'education' },
+    ];
+  });
 
   constructor() {
     afterNextRender(() => {

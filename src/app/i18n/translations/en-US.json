@@ -1,0 +1,41 @@
+{
+  "nav": {
+    "ariaLabel": "Page navigation",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "home": "Home",
+    "skills": "Skills",
+    "experience": "Experience",
+    "education": "Education"
+  },
+  "theme": {
+    "activateLight": "Activate light mode",
+    "activateDark": "Activate dark mode",
+    "lightLabel": "Light mode",
+    "darkLabel": "Dark mode"
+  },
+  "language": {
+    "groupLabel": "Select language",
+    "ptBrLabel": "Português",
+    "enUsLabel": "English",
+    "ptBrAriaLabel": "Mudar para português",
+    "enUsAriaLabel": "Switch to English"
+  },
+  "hero": {
+    "greeting": "Hi, I'm"
+  },
+  "skills": {
+    "heading": "Skills",
+    "levelLabels": {
+      "advanced": "advanced",
+      "intermediate": "intermediate",
+      "exploring": "exploring"
+    }
+  },
+  "experience": {
+    "heading": "Experience"
+  },
+  "education": {
+    "heading": "Education"
+  }
+}

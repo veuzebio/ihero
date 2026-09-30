@@ -35,4 +35,21 @@
       <path d="M2 19h20v2H2v-2zM2 5l5 7.5L12 3l5 9.5L22 5v12H2V5z"/>
     </svg>
   }
+  @case ('flag-br') {
+    <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="1" y="4" width="22" height="16" rx="2" fill="#009739" />
+      <path d="M12 6.5 21 12 12 17.5 3 12Z" fill="#FEDD00" />
+      <circle cx="12" cy="12" r="3.4" fill="#012169" />
+    </svg>
+  }
+  @case ('flag-us') {
+    <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="1" y="4" width="22" height="16" rx="2" fill="#FFFFFF" />
+      <rect x="1" y="4" width="22" height="2.29" fill="#B22234" />
+      <rect x="1" y="8.57" width="22" height="2.29" fill="#B22234" />
+      <rect x="1" y="13.14" width="22" height="2.29" fill="#B22234" />
+      <rect x="1" y="17.71" width="22" height="2.29" fill="#B22234" />
+      <rect x="1" y="4" width="10" height="8" fill="#3C3B6E" />
+    </svg>
+  }
 }

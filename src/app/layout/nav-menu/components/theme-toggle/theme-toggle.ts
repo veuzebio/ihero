@@ -1,5 +1,5 @@
 import { Component, input, inject } from '@angular/core';
-import { ThemeService } from '../../../../shared/services';
+import { ThemeService, LanguageService } from '../../../../shared/services';
 import { Icon } from '../../../../shared/components';
 
 export type ThemeToggleVariant = 'icon' | 'switch';
@@ -12,4 +12,5 @@ export type ThemeToggleVariant = 'icon' | 'switch';
 export class ThemeToggle {
   readonly variant = input.required<ThemeToggleVariant>();
   readonly themeService = inject(ThemeService);
+  readonly languageService = inject(LanguageService);
 }

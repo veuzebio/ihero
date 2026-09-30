@@ -5,7 +5,7 @@
     class="p-1.5 text-neutral-600 dark:text-dark-muted hover:bg-neutral-100 dark:hover:bg-dark-surface-2 hover:text-neutral-900 dark:hover:text-dark-text transition-colors duration-200"
     [attr.aria-expanded]="isOpen()"
     aria-controls="nav-sidebar"
-    [attr.aria-label]="isOpen() ? 'Fechar menu de navegação' : 'Abrir menu de navegação'"
+    [attr.aria-label]="isOpen() ? languageService.t().nav.closeMenu : languageService.t().nav.openMenu"
     (click)="toggleMenu()"
   >
     @if (isOpen()) {
@@ -15,7 +15,10 @@
     }
   </button>
 
-  <app-theme-toggle variant="icon" />
+  <div class="flex items-center gap-1">
+    <app-language-selector variant="icon" />
+    <app-theme-toggle variant="icon" />
+  </div>
 </div>
 
 <!-- Backdrop — mobile only -->
@@ -31,7 +34,7 @@
 <nav
   #navSidebar
   id="nav-sidebar"
-  aria-label="Navegação da página"
+  [attr.aria-label]="languageService.t().nav.ariaLabel"
   class="fixed top-0 left-0 z-40 h-full w-52 flex flex-col pt-16 pb-8 px-4
     bg-white dark:bg-dark-surface
     -translate-x-full lg:translate-x-0
@@ -42,7 +45,7 @@
   (keydown)="onNavKeydown($event)"
 >
   <ul role="list" class="flex flex-col gap-1 flex-1">
-    @for (item of navItems; track item.id) {
+    @for (item of navItems(); track item.id) {
       <li>
         <a
           [href]="'#' + item.id"
@@ -56,8 +59,9 @@
     }
   </ul>
 
-  <!-- Theme toggle — desktop sidebar (bottom) -->
-  <div class="hidden lg:block mt-auto pt-4 border-t border-neutral-200 dark:border-dark-border">
+  <!-- Theme and language toggles — desktop sidebar (bottom) -->
+  <div class="hidden lg:flex lg:flex-col lg:gap-1 mt-auto pt-4 border-t border-neutral-200 dark:border-dark-border">
     <app-theme-toggle variant="switch" />
+    <app-language-selector variant="switch" />
   </div>
 </nav>

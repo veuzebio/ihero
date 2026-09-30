@@ -1,0 +1,55 @@
+@if (variant() === 'icon') {
+  <div
+    role="radiogroup"
+    [attr.aria-label]="languageService.t().language.groupLabel"
+    class="flex items-center gap-1"
+  >
+    @for (lang of languages; track lang) {
+      <button
+        type="button"
+        role="radio"
+        [attr.aria-checked]="languageService.language() === lang"
+        [attr.aria-label]="lang === 'pt-BR' ? languageService.t().language.ptBrAriaLabel : languageService.t().language.enUsAriaLabel"
+        [tabindex]="languageService.language() === lang ? 0 : -1"
+        class="flex items-center gap-1.5 p-1.5 rounded-full transition-colors duration-200 text-neutral-600 dark:text-dark-muted hover:bg-neutral-100 dark:hover:bg-dark-surface-2"
+        [class.bg-neutral-100]="languageService.language() === lang"
+        [class.dark:bg-dark-surface-2]="languageService.language() === lang"
+        (click)="languageService.setLanguage(lang)"
+        (keydown)="onKeydown($event, lang)"
+      >
+        <app-icon [name]="lang === 'pt-BR' ? 'flag-br' : 'flag-us'" [size]="18" />
+      </button>
+    }
+  </div>
+}
+
+@if (variant() === 'switch') {
+  <div
+    role="radiogroup"
+    [attr.aria-label]="languageService.t().language.groupLabel"
+    class="w-full flex flex-col gap-1"
+  >
+    @for (lang of languages; track lang) {
+      <button
+        type="button"
+        role="radio"
+        [attr.aria-checked]="languageService.language() === lang"
+        [attr.aria-label]="lang === 'pt-BR' ? languageService.t().language.ptBrAriaLabel : languageService.t().language.enUsAriaLabel"
+        [tabindex]="languageService.language() === lang ? 0 : -1"
+        class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200
+          text-neutral-600 dark:text-dark-muted
+          hover:bg-neutral-100 dark:hover:bg-dark-surface-2
+          hover:text-neutral-900 dark:hover:text-dark-text"
+        [class.bg-neutral-100]="languageService.language() === lang"
+        [class.dark:bg-dark-surface-2]="languageService.language() === lang"
+        [class.text-neutral-900]="languageService.language() === lang"
+        [class.dark:text-dark-text]="languageService.language() === lang"
+        (click)="languageService.setLanguage(lang)"
+        (keydown)="onKeydown($event, lang)"
+      >
+        <app-icon [name]="lang === 'pt-BR' ? 'flag-br' : 'flag-us'" [size]="16" />
+        <span>{{ lang === 'pt-BR' ? languageService.t().language.ptBrLabel : languageService.t().language.enUsLabel }}</span>
+      </button>
+    }
+  </div>
+}

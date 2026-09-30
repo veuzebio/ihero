@@ -2,7 +2,7 @@
   <button
     type="button"
     class="flex items-center gap-1.5 p-1.5 rounded-full transition-colors duration-200 text-neutral-600 dark:text-dark-muted hover:bg-neutral-100 dark:hover:bg-dark-surface-2"
-    [attr.aria-label]="themeService.isDark() ? 'Ativar modo claro' : 'Ativar modo escuro'"
+    [attr.aria-label]="themeService.isDark() ? languageService.t().theme.activateLight : languageService.t().theme.activateDark"
     [attr.aria-pressed]="themeService.isDark()"
     (click)="themeService.toggle()"
   >
@@ -21,7 +21,7 @@
       text-neutral-600 dark:text-dark-muted
       hover:bg-neutral-100 dark:hover:bg-dark-surface-2
       hover:text-neutral-900 dark:hover:text-dark-text"
-    [attr.aria-label]="themeService.isDark() ? 'Ativar modo claro' : 'Ativar modo escuro'"
+    [attr.aria-label]="themeService.isDark() ? languageService.t().theme.activateLight : languageService.t().theme.activateDark"
     [attr.aria-pressed]="themeService.isDark()"
     (click)="themeService.toggle()"
   >
@@ -44,6 +44,6 @@
         }
       </span>
     </span>
-    <span>{{ themeService.isDark() ? 'Modo claro' : 'Modo escuro' }}</span>
+    <span>{{ themeService.isDark() ? languageService.t().theme.lightLabel : languageService.t().theme.darkLabel }}</span>
   </button>
 }
