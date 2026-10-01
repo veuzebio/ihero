@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/ihero/browser",
+  "cleanUrls": true,
+  "trailingSlash": false
+}

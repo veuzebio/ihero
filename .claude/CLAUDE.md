@@ -5,14 +5,11 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 ```bash
 # Development
 npm start          # ng serve — dev server at http://localhost:4200
-npm run build      # production build → dist/
+npm run build      # production build → dist/ihero/browser (fully static, outputMode: "static")
 npm run watch      # incremental dev build with file watching
 
 # Testing
 npm test           # ng test — runs Vitest unit tests
-
-# Production SSR server (after build)
-npm run serve:ssr:ihero   # node dist/ihero/server/server.mjs (port 4000)
 ```
 
 Run a single test file:
@@ -27,18 +24,18 @@ npx prettier --write "src/**/*.{ts,html,css}"
 
 ## Process Hygiene
 
-**Always stop background processes before ending a task.** If a dev server (`ng serve`), SSR server, or any background process was started during the task, stop it before reporting the task as complete — use `devserver_stop` (MCP) or kill the process by port if started via Bash.
+**Always stop background processes before ending a task.** If a dev server (`ng serve`) or any background process was started during the task, stop it before reporting the task as complete — use `devserver_stop` (MCP) or kill the process by port if started via Bash.
 
 Do not leave processes running between tasks unless the user explicitly asks to keep them alive.
 
 ## Architecture
 
-**Angular 22 + SSR** — standalone components, no NgModules. The app runs both in the browser and server-side via `@angular/ssr` + Express.
+**Angular 22, fully static output** — standalone components, no NgModules. `angular.json` sets `outputMode: "static"` and `app.routes.server.ts` prerenders every route at build time (`RenderMode.Prerender`), so the production build (`dist/ihero/browser`) is plain HTML/CSS/JS with no Node server required. Deployed to Vercel as a static site (see [vercel.json](vercel.json)). `src/server.ts` and `src/main.server.ts` are kept only because `ng serve`'s dev-server pipeline still uses the server bundle internally — they are not part of the deployed output and should not be used to add backend/API logic; if the app ever needs a real API or per-request rendering, switch a route to `RenderMode.Server` in `app.routes.server.ts` and revisit `outputMode`.
 
 Entry points:
 - [src/main.ts](src/main.ts) — browser bootstrap
-- [src/main.server.ts](src/main.server.ts) — server bootstrap
-- [src/server.ts](src/server.ts) — Express server; add REST API routes here before the Angular catch-all handler
+- [src/main.server.ts](src/main.server.ts) — server bootstrap (used by `ng serve`/prerendering only)
+- [src/server.ts](src/server.ts) — Express server (used by `ng serve`/prerendering only, not deployed)
 
 App shell:
 - [src/app/app.ts](src/app/app.ts) — root component (standalone, uses signals)
